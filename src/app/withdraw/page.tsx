@@ -13,7 +13,7 @@ export default function WithdrawPage() {
       <form>
         <div className="mt-10 bg-white rounded-xl w-[512px] py-5 px-4">
           <Input labelDescription="Amount to send" />
-          <button className="bg-[#f0f2f5] w-full mt-4 py-4 rounded outline-none text-[#8592ad]">
+          <button className="bg-red-100 disabled:bg-[#f0f2f5] w-full mt-4 py-4 rounded outline-none text-[#8592ad]">
             continue
           </button>
         </div>
