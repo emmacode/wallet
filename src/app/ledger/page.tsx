@@ -1,3 +1,5 @@
+import {FinanceService} from "../../../server/finance";
+
 interface LedgerProps {
   clerkType: "debit" | "credit";
   entryType: string;
@@ -8,36 +10,8 @@ interface LedgerProps {
   availableDelta: number;
 }
 
-export default function LedgerPage() {
-  const data: LedgerProps[] = [
-    {
-      clerkType: "credit",
-      entryType: "credit",
-      transactionId: "TRX001",
-      pendingBalance: 1000.0,
-      pendingDelta: 100.0,
-      availableBalance: 900.0,
-      availableDelta: 50.0,
-    },
-    {
-      clerkType: "debit",
-      entryType: "cebit",
-      transactionId: "TRX002",
-      pendingBalance: 800.0,
-      pendingDelta: -200.0,
-      availableBalance: 750.0,
-      availableDelta: -150.0,
-    },
-    {
-      clerkType: "credit",
-      entryType: "credit",
-      transactionId: "TRX003",
-      pendingBalance: 1200.0,
-      pendingDelta: 400.0,
-      availableBalance: 1100.0,
-      availableDelta: 350.0,
-    },
-  ];
+export default async function LedgerPage() {
+  const data = await new FinanceService().fetchLedgerEntries();
 
   return (
     <div className="bg-white shadow rounded-lg overflow-hidden">
@@ -92,25 +66,25 @@ export default function LedgerPage() {
           {data.map((transaction, index) => (
             <tr key={index}>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {transaction.clerkType}
+                {transaction.clerk_type}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {transaction.entryType}
+                {transaction.entry_type}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {transaction.transactionId}
+                {transaction.id}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {transaction.pendingBalance.toFixed(2)}
+                {transaction.pending_balance.toFixed(2)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                {transaction.pendingDelta.toFixed(2)}
+                {transaction.pending_delta.toFixed(2)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {transaction.availableBalance.toFixed(2)}
+                {transaction.available_balance.toFixed(2)}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                {transaction.availableDelta.toFixed(2)}
+                {transaction.available_delta.toFixed(2)}
               </td>
             </tr>
           ))}
