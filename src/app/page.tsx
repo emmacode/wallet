@@ -26,7 +26,7 @@ export default function Home() {
         fetchBalances();
     }, []);
   return (
-    <div className="flex flex-col bg-white py-5 justify-center items-center mt-28 border border-[#F0F2F5] rounded-3xl">
+    <div className="flex flex-col bg-white py-5 justify-center items-center mt-28 border border-[#F0F2F5] rounded-3xl max-w-2xl mx-auto">
       <div className="flex flex-row divide-x-[1px]">
         <div className="flex flex-col px-10 gap-4 items-center">
           <p className="text-sm text-[#8592ad] mb-3">Available USD balance</p>
