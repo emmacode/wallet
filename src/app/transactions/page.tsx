@@ -1,11 +1,40 @@
-// TransactionsPage.tsx (Server Component)
-import { DateTimeFormat } from "@/utils/date-format";
+'use client';
+
+import { useEffect, useState } from "react";
 import { FinanceService } from "../../../server/finance";
 import TransactionRow from "./TransactionRow"; // Import Client Component
 
-export default async function TransactionsPage() {
-    const financeService = new FinanceService();
-    const transactions = await financeService.fetchTransactions();
+export default function TransactionsPage() {
+    const [transactions, setTransactions] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchTransactions = async () => {
+            try {
+                const financeService = new FinanceService();
+                const fetchedTransactions = await financeService.fetchTransactions();
+                setTransactions(fetchedTransactions);
+            } catch (error) {
+                console.error("Error fetching transactions:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTransactions();
+    }, []);
+
+    const refreshTransactions = async () => {
+        setLoading(true);
+        const financeService = new FinanceService();
+        const fetchedTransactions = await financeService.fetchTransactions();
+        setTransactions(fetchedTransactions);
+        setLoading(false);
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="bg-white shadow rounded-lg overflow-hidden">
@@ -51,7 +80,7 @@ export default async function TransactionsPage() {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                 {transactions.map((transaction, index) => (
-                    <TransactionRow key={index} transaction={transaction} />
+                    <TransactionRow key={index} transaction={transaction} onTransactionUpdated={refreshTransactions} />
                 ))}
                 </tbody>
             </table>
