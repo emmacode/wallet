@@ -21,6 +21,7 @@ export default function TransactionRow({ transaction }) {
     };
 
     return (
+    <>
         <tr>
             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 ${transaction.amount.toFixed(2)}
@@ -62,27 +63,29 @@ export default function TransactionRow({ transaction }) {
                         >
                             &#x2022;&#x2022;&#x2022;
                         </button>
-                        {selectedTransactionId === transaction.id && (
-                            <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                    <a
-                                        onClick={() => handleConfirmTransaction(transaction.id)}
-                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                                    >
-                                        Confirm Transaction
-                                    </a>
-                                    <a
-                                        onClick={() => handleFailTransaction(transaction.id)}
-                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                                    >
-                                        Fail Transaction
-                                    </a>
-                                </div>
-                            </div>
-                        )}
+
                     </div>
                 )}
             </td>
         </tr>
+        {selectedTransactionId === transaction.id && (
+            <div className="z-10 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                    <a
+                        onClick={() => handleConfirmTransaction(transaction.id)}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                    >
+                        Confirm Transaction
+                    </a>
+                    <a
+                        onClick={() => handleFailTransaction(transaction.id)}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                    >
+                        Fail Transaction
+                    </a>
+                </div>
+            </div>
+        )}
+    </>
     );
 }
